@@ -21,8 +21,8 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
             <div class="list" *ngIf="data && !hideList" (mouseenter)="onMouseEnterList($event)" (mouseleave)="onMouseLeaveList($event)">
                 <div *ngFor="let item of data;let index = index;"
                      [ngClass]="{'item': true, 'marked': isMarked(item), 'disabled': isDisabled(item)}"
-                     (click)="onItemClick(index, item)">
-                    {{getDisplayValue(item)}}
+                     (click)="onItemClick(index, item)"
+                     [innerHtml]="getDisplayHtmlValue(item)">
                 </div>
             </div>
         </div>
@@ -389,6 +389,37 @@ export class ComboBoxComponent implements ControlValueAccessor, OnInit {
     private clear() {
         this.currVal = '';
         this.data = [];
+    }
+
+    private getDisplayHtmlValue(val: any) {
+        let displayValue = this.getDisplayValue(val);
+
+        if(!displayValue) {
+            return null;
+        }
+
+        let currVal = this.currVal;
+
+        if(!this.localFilter || !currVal) {
+            return displayValue;
+        }
+
+        let startIndex;
+        startIndex = displayValue.indexOf(currVal);
+
+        if(startIndex == -1) {
+            return displayValue;
+        } else {
+            let endIndex = startIndex + currVal.length;
+
+            let beforeMatchedPart = displayValue.substring(0, startIndex);
+            let matchedPart = displayValue.substring(startIndex, endIndex);
+            let afterMatchedPart = displayValue.substring(endIndex);
+
+            let result = beforeMatchedPart + '<strong>' + matchedPart + '</strong>' + afterMatchedPart;
+
+            return result;
+        }
     }
 
     private getDisplayValue(val: any) {
