@@ -1,6 +1,6 @@
-import {Component, OnInit, Input, Output, EventEmitter, forwardRef, ViewChild} from '@angular/core';
-import {Observable, Subscription} from 'rxjs/Rx';
-import {AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validator} from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter, forwardRef, ViewChild } from '@angular/core';
+import { Observable, Subscription } from 'rxjs/Rx';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validator } from '@angular/forms';
 
 @Component({
     moduleId: 'ng2-combobox',
